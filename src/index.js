@@ -3,14 +3,41 @@ import ReactDOM from 'react-dom/client';
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState({0:0,1:0,2:0,3:0,4:0,5:0})
+  const [voteQty,setVoteQty] = useState(0)
 
+
+  const nextAnecdote = () => {
+      const random = Math.floor(Math.random()*4)
+      setSelected(random)
+      setVoteQty(random)  
+  }
+  
+  const vote = () => {
+    const copy = {...points}
+    copy[voteQty] =+ 1
+    setPoints(copy)
+
+  }
+
+  
+ 
   return (
     <>
       <p>{props.anecdotes[selected]}</p>
-      <Button text="next anecdote" handleClick={() => setSelected(Math.floor(Math.random()*4) )} />
+      <Button text="vote"  handleClick={vote} />
+      <Button text="next anecdote" handleClick={nextAnecdote} />
+      <p>has {points[voteQty]} votes</p>
     </>
   )
 }
+
+
+// const vote = () => {
+//  setVote(vote + 1)
+
+ 
+// }
 
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
